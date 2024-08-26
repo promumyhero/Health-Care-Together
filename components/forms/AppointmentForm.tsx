@@ -26,6 +26,7 @@ const AppointmentForm = ({
   const [isLoading, setIsLoading] = useState(false);
   // 1. Define your form.
   const AppointmentFormValidation = getAppointmentSchema(type);
+
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
