@@ -52,6 +52,8 @@ const AppointmentForm = ({
             break;
     }
 
+    console.log('Before type', type)
+
     try {
         if (type === 'create' && patientId) {
             const appointmentData = {
@@ -65,9 +67,11 @@ const AppointmentForm = ({
             }
             const appointment = await createAppointment(appointmentData);
 
+            console.log(appointment)
+
             if(appointment) {
                 form.reset();
-                router.push(`/patients/${userId}/new-appointment/success/?{appointment.id}`);
+                router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`);
             }
         }
         
