@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Doctors } from '@/constants';
 import { getAppointment } from '@/lib/actions/appointment.action';
 import { formatDateTime } from '@/lib/utils';
@@ -66,6 +67,14 @@ const Success = async ({ params: {userId}, searchParams }: SearchParamProps) => 
                     </p>
                 </div>
             </section>
+            <Button variant="outline" className="shad-primary-btn" asChild>
+                <Link href={`/patients/${userId}/new-appointment`}>
+                    New Appointment
+                </Link>
+            </Button>
+            <p className="copyright">
+                © 2024 CarePulse
+            </p>
         </div>   
     </div>
   )
