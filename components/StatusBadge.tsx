@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import React from 'react'
 
-const StatusBadge = ({ status }: {status: Status} ) => {
+const StatusBadge = ({ status }: { status: Status }) => {
   return (
     <div className={clsx("status-badge", {
         "bg-green-600": status === "scheduled",

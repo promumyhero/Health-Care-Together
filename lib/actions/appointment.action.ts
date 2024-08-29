@@ -5,6 +5,7 @@ import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases, PATIENT_COLLECTION_I
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { init } from "next/dist/compiled/webpack/webpack";
+import { revalidatePath } from "next/cache";
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
     try {
@@ -65,7 +66,7 @@ export const getRecentAppointmentList = async () => {
         const data = {
             totalCount: appointments.total,
             ...counts,
-            dcouments: appointments.documents
+            documents: appointments.documents
         }
         return parseStringify(data);
         
@@ -74,3 +75,24 @@ export const getRecentAppointmentList = async () => {
     }
 }
 
+export const updateAppointment = async ({ appointmentId, userId, appointment, type }: UpdateAppointmentParams) => {
+    try {
+        const updatedAppointment = await databases.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENT_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        )
+
+        if(!updatedAppointment) {
+            throw new Error('Appointment not found')
+        }
+
+        // TODO SMS notification
+
+        revalidatePath('/admin')
+        return parseStringify(updatedAppointment);
+    } catch (error) {
+        console.log(error)
+    }
+}
